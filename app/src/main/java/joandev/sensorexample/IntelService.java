@@ -49,6 +49,7 @@ public class IntelService extends Service implements SensorEventListener, MediaP
         super.onDestroy();
         Log.v("sensorData", "detached");
         sensorManager.unregisterListener(this);
+        mPlayer.release();
 
     }
 
