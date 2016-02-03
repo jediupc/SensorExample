@@ -1,25 +1,24 @@
 package joandev.sensorexample;
 
-import java.io.IOException;
-import java.util.List;
-
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.pm.PackageManager;
+import android.location.*;
 import android.location.GpsStatus.Listener;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GPSActivity extends Activity {
 	/** Called when the activity is first created. */
 	List<Address> l;
 	LocationManager lm;
 	LocationListener lis;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,7 +30,7 @@ public class GPSActivity extends Activity {
 
 			@Override
 			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
+										Bundle extras) {
 			}
 
 			@Override
@@ -54,14 +53,14 @@ public class GPSActivity extends Activity {
 				}
 				for (int i = 0; i < l.size(); ++i) {
 					Log.v("LOG", l.get(i).getAddressLine(0).toString());
-					TextView t = (TextView) findViewById(R.id.TV);
-					if(i==0) t.setText("");
-					t.setText(t.getText()+"\n"+l.get(i).getAddressLine(0).toString());
+					TextView t = (TextView) findViewById(R.id.textView);
+					if (i == 0) t.setText("");
+					t.setText(t.getText() + "\n" + l.get(i).getAddressLine(0).toString());
 				}
 				Log.v("LOG", ((Double) location.getLatitude()).toString());
 			}
 		};
-		
+
 		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, lis);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, lis);
 	}
