@@ -16,7 +16,6 @@ public class IntelService extends Service implements SensorEventListener, MediaP
 
     SensorManager sensorManager;
     Sensor sensor;
-    Float maxLux, minLux;
     MediaPlayer mPlayer;
 
     public IntelService() {
@@ -25,9 +24,6 @@ public class IntelService extends Service implements SensorEventListener, MediaP
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        maxLux = 0f;
-        minLux = 4000f;
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) != null) {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -61,16 +57,10 @@ public class IntelService extends Service implements SensorEventListener, MediaP
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Log.v("sensorData", "sensorChanged");
         Float lux = sensorEvent.values[0];
         Log.v("sensorData", lux.toString());
-
-        if (lux < minLux) minLux = lux;
-        if (lux > maxLux) maxLux = lux;
-        if (maxLux > minLux + 500) {
+        if (lux < 50) {
             mPlayer.start();
-            maxLux = 0f;
-            minLux = 4000f;
         }
 
     }

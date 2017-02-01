@@ -22,10 +22,7 @@ public class MainActivity extends ActionBarActivity {
     public void startTheParty() {
         startService(new Intent(this, IntelService.class));
     }
-    @OnClick(R.id.buttonStop)
-    public void stopTheParty() {
-        stopService(new Intent(this, IntelService.class));
-    }
+
     @OnClick(R.id.fab)
     public void startGpsActivity(){
         startActivity(new Intent (MainActivity.this, GPSActivity.class));
